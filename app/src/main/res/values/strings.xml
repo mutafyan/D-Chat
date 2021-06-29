@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">D-Chat</string>
+    <string name="sign_in">Already have an account? Sign in</string>
+    <string name="register_button">Register</string>
+    <string name="password">Password</string>
+    <string name="e_mail">Email</string>
+    <string name="full_name">Full Name</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_log_in">Log in</string>
+    <string name="create_new_account">Create new Account</string>
+    <string name="logo">Logo</string>
+    <string name="type_a_message">Type a message…</string>
+    <string name="logout">Logout</string>
+    <string name="open_profile">Profile</string>
+    <string name="profile_name">Full Name</string>
+    <string name="search_users">Search for users…</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="send_email">Your email</string>
+    <string name="reset_button">Reset</string>
+    <string name="reset_text_hint">After clicking RESET, you will receive an E-mail with reset link</string>
+</resources>

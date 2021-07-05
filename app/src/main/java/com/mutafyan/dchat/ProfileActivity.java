@@ -88,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
                 name.setText(user.getUsername());
                 email.setText(user.getEmail());
                 if(user.getImageURL().equals("default")) {
-                    profile_pic.setImageResource(R.mipmap.ic_launcher);
+                    profile_pic.setImageResource(R.drawable.ic_default_pfp);
                 } else {
                     Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_pic);
                 }

@@ -136,7 +136,7 @@ public class MessageActivity extends AppCompatActivity {
                 User user = snapshot.getValue(User.class);
                 username.setText(user.getUsername());
                 if(user.getImageURL().equals("default")){
-                    profile_pic.setImageResource(R.mipmap.ic_launcher);
+                    profile_pic.setImageResource(R.drawable.ic_default_pfp);
                 } else {
                     Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_pic);
                 }

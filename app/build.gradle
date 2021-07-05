@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.mutafyan.dchat"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.2.0"
@@ -51,11 +51,11 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-storage' // bom last version
 
-//     Notifications
+    // Notifications
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation 'com.google.firebase:firebase-messaging:22.0.0' // bom last version
-
+    implementation 'com.google.firebase:firebase-messaging' // bom last version
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

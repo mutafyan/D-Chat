@@ -144,9 +144,9 @@ public class LoginActivity extends AppCompatActivity {
             passwordET.setError("Password is Required!");
             is_ok = false;
         }
-        else if(password.length() < 5)
+        else if(password.length() <= 5)
         {
-            passwordET.setError("Password must be at least 5 characters");
+            passwordET.setError("Password must be at least 6 characters");
             is_ok = false;
         }
 

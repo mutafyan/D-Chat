@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token = new Token(newtoken);
+        assert firebaseUser != null;
         reference.child(firebaseUser.getUid()).setValue(token);
 
     }
@@ -59,12 +61,46 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull @NotNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        String sent = remoteMessage.getData().get("sent");
+        String sented = remoteMessage.getData().get("sented");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(firebaseUser != null && sent.equals(firebaseUser.getUid())) {
-            sendNotification(remoteMessage);
+        if(firebaseUser != null && sented.equals(firebaseUser.getUid())) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                sendOreoPlusNotification(remoteMessage);
+            } else {
+                sendNotification(remoteMessage);
+            }
         }
+    }
+
+    private void sendOreoPlusNotification(RemoteMessage remoteMessage) {
+        String user = remoteMessage.getData().get("user");
+        String icon = remoteMessage.getData().get("icon");
+        String title = remoteMessage.getData().get("title");
+        String body = remoteMessage.getData().get("body");
+
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+        assert user != null;
+        int j = Integer.parseInt(user.replaceAll("[\\D]", ""));
+        Intent intent = new Intent(this, MessageActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("userid", user);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        OreoPlusNotication oreoPlusNotication = new OreoPlusNotication(this);
+        Notification.Builder builder = oreoPlusNotication.getOreoPlusNotification(title, body, pendingIntent,
+                defaultSound, icon);
+
+        int i = 0;
+        if (j > 0) {
+            i = j;
+        }
+        oreoPlusNotication.getManager().notify(i, builder.build());
+
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
@@ -84,6 +120,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        assert icon != null;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(Integer.parseInt(icon))
                 .setContentTitle(title)
